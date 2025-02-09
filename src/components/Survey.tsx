@@ -3,6 +3,8 @@ import { useState } from "react";
 import RadioButtons from "./radioButtons";
 import Checkboxes from "./Checkboxes";
 import { Form, FormWithList } from "../types";
+import React from "react";
+import AnswersList from "./AnswersList";
 
 
 function Survey() {
@@ -19,6 +21,7 @@ function Survey() {
     email: ""
 
   })
+  const [answers, addAnswer] = useState<FormWithList[]>([]);
   let postedForms : FormWithList[] = [];
 
   const handlechange=(event) =>{
@@ -46,22 +49,21 @@ function Survey() {
       }
   };
 
-
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
   
     //convert formdata t object with spend time activities in spendtime list
+    addAnswer([...answers, {
+      color: formData.color,
+      timeSpent: [formData.chatting, formData.swimming, formData.bathing, formData.noTime],
+      review: formData.review,
+      username : formData.username,
+      email: formData.email
+    } ])
 
-    postedForms.push(
-      {
-        color: formData.color,
-        timeSpent: [formData.chatting, formData.swimming, formData.bathing, formData.noTime],
-        review: formData.review,
-        username : formData.username,
-        email: formData.email
-      }
-    )
+
     setFormData ({
     color: 0,
     chatting: false,
@@ -72,7 +74,7 @@ function Survey() {
     username : "",
     email: ""
      })
-    console.log(postedForms);
+    console.log(answers);
    
   
   };
@@ -83,6 +85,7 @@ function Survey() {
       <section className={`survey__list ${open ? "open" : ""}`}>
         <h2>Answers list</h2>
         {/* answers should go here */}
+        <AnswersList answersList={answers}></AnswersList>
       </section>
       <section className="survey__form">{
       
@@ -92,11 +95,11 @@ function Survey() {
         <h2>Tell us what you think about your rubber duck!</h2>
         <div className="form__group radio">
           <h3>How do you rate your rubber duck colour?</h3>
-          <RadioButtons onChange={ handlechange}></RadioButtons>
+          <RadioButtons onChange={ handlechange} formData={formData}></RadioButtons>
         </div>
         <div className="form__group">
           <h3>How do you like to spend time with your rubber duck</h3>
-          <Checkboxes onChange={ handlechange}></Checkboxes>
+          <Checkboxes onChange={ handlechange} formData={formData}></Checkboxes>
         </div>
         <label
           >What else have you got to say about your rubber duck?<textarea
@@ -104,19 +107,21 @@ function Survey() {
             name="review"
             cols="30"
             rows="10"
-         
+            value={formData.review}
           ></textarea></label
         ><label
           >Put your name here (if you feel like it):<input
           onChange={handlechange}
             type="text"
             name="username"
+            value={formData.username}
              /></label
         ><label
           >Leave us your email pretty please??<input
             onChange={handlechange}
             type="email"
             name="email"
+            value={formData.email}
           /></label
         ><input className="form__submit" type="submit" value="Submit Survey!" onClick={handleSubmit} />
       </form>

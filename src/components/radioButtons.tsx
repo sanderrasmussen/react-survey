@@ -1,18 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function RadioButtons(props){
     const handleChange = props.onChange;
+   
 
+    const isChecked = (number) => { return props.color==number};
     return (
         <ul>
             <li>
-                <input onChange={handleChange} id="color-one" type="radio" name="color" value="1" /><label
+                <input onChange={handleChange} id="color-one" type="radio" name="color" value="1"  /><label
                 htmlFor="color-one"
                 >1</label
                 >
             </li>
             <li>
-                <input onChange={handleChange} id="color-two" type="radio" name="color" value="2" /><label
+                <input onChange={handleChange} id="color-two" type="radio" name="color" value="2"  /><label
                 htmlFor="color-two"
                 >2</label
                 >

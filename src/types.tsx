@@ -18,3 +18,9 @@ export interface FormWithList{
     username : string,
     email: string
 }
+export interface Activities{
+    swimming: string,
+    bathing: string,
+    chatting: string,
+    noTime: string
+}
