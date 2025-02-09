@@ -10,6 +10,7 @@ function Checkboxes(props){
                     name="spend-time"
                     type="checkbox"
                     value="swimming"
+                    
                     onChange= { handleChange}
                 />Swimming</label
                 >

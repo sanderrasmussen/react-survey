@@ -2,13 +2,13 @@
 import { useState } from "react";
 import RadioButtons from "./radioButtons";
 import Checkboxes from "./Checkboxes";
+import { Form, FormWithList } from "../types";
+
 
 function Survey() {
   const [open, setOpen] = useState(false); //Ignore this state
 
-  const [formData, setFormData]= useState({
-
-    
+  const [formData, setFormData]= useState<Form>({
     color : 0,
     chatting: false,
     swimming: false,
@@ -19,7 +19,7 @@ function Survey() {
     email: ""
 
   })
-  let postedForms = [];
+  let postedForms : FormWithList[] = [];
 
   const handlechange=(event) =>{
     const {name, value} = event.target;
@@ -28,21 +28,21 @@ function Survey() {
     switch(event.target.name){
       case ('username') :
         console.log(name);
-        return setFormData({...formData, [name]: event.target.value});
-        
+        setFormData({...formData, [name]: event.target.value});
+        break;
       case ("email" ) : 
-        return setFormData({...formData, [name]: event.target.value});
-      
+        setFormData({...formData, [name]: event.target.value});
+        break;
       case ( "review" ):
-        return setFormData({...formData, [name]: event.target.value});
-  
+        setFormData({...formData, [name]: event.target.value});
+        break;
       case ( "spend-time" ):
         console.log(name);
-        return setFormData({...formData, [value]: event.target.checked});
-      
+        setFormData({...formData, [value]: event.target.checked});
+        break;
       case ("color" ):
-        console.log(event.target.name);
-        return setFormData({...formData, [event.target.name]: event.target.value}) ;
+        setFormData({...formData, [event.target.name]: event.target.value}) ;
+        break;
       }
   };
 
@@ -62,7 +62,19 @@ function Survey() {
         email: formData.email
       }
     )
+    setFormData ({
+    color: 0,
+    chatting: false,
+    swimming: false,
+    bathing: false,
+    noTime: false,
+    review: "",
+    username : "",
+    email: ""
+     })
     console.log(postedForms);
+   
+  
   };
 
 
